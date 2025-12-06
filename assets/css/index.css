@@ -41,6 +41,7 @@
     border-radius: 15px;
     transition: all 0.3s ease;
     overflow: hidden;
+    height: auto !important;
 }
 
 .card:hover {
