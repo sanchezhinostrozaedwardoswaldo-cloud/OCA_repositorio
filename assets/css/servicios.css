@@ -1,0 +1,228 @@
+/* 1. Elimina el margen del body para que el header pegue arriba */
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; /* Cambiado de 20px a 0 */
+    background-color: #f4f4f4; 
+}
+
+/* 2. Si quieres que el header de servicios se vea igual al de nosotros */
+.page-header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    padding: 120px 0 60px; /* Padding superior para dar espacio al navbar */
+    color: white;
+    position: relative;
+    text-align: center;
+}
+
+/* 3. Ajusta el header viejo que tenías por si decides no usar la clase .page-header */
+header { 
+    text-align: center; 
+    background-color: #272626; 
+    color: white; 
+    padding: 100px 20px 50px; /* Más padding arriba para que no lo tape el navbar */
+    margin: 0; /* Asegúrate de que no tenga margen */
+}
+
+/*CSS DE LOS CARD*/
+
+.team-section {
+  color: #ffffff;
+  font-family: "Sekuya", system-ui;
+  font-weight: 400;
+  font-style: normal
+}
+.team-section.container h2 {
+  color: #555454;
+}
+
+
+.team-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #111;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.team-card:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+.team-info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+}
+
+.team-info h5 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.team-info p {
+  margin: 2px 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.team-info span {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+/*Ajustes para las herrameinta del robot oca */
+.robot-section {
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fdfdfd; /* Fondo oscuro para resaltar */
+    overflow: hidden;
+    perspective: 1000px;
+}
+.robot-section {
+    padding: 80px 0;
+    background-color: #fdfdfd; /* Fondo claro según tu código */
+    overflow: hidden;
+}
+
+/* Contenedor del texto */
+.robot-text-content {
+    flex: 1;
+    min-width: 300px; /* Evita que se vea muy pequeño en móviles */
+    max-width: 500px; /* Limita el ancho para que sea legible */
+    padding-right: 40px; /* Espacio entre texto y robot */
+    text-align: left; /* Alinea el título a la izquierda */
+}
+
+/* Título */
+.robot-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+
+/* Párrafo Justificado */
+.robot-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-align: justify; /* Aquí se justifica el texto */
+    color: #555;
+}
+
+/* Ajuste del contenedor del robot para que no ocupe toda la pantalla */
+.universe {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 500px;
+}
+
+/* Responsivo: En celulares el texto va arriba y el robot abajo */
+@media (max-width: 992px) {
+    .robot-text-content {
+        padding-right: 0;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    .robot-description {
+        text-align: center; /* En móvil se ve mejor centrado */
+    }
+}
+
+.universe {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.robot-center {
+    width: 400px;
+    height: 400px;
+    z-index: 2;
+}
+
+/* La órbita que gira */
+.orbit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotateOrbit 20s linear infinite;
+    transform-style: preserve-3d;
+}
+
+
+.icon-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    background: rgba(104, 103, 103, 0.1);
+    border: 1px solid var(--primary-blue);
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgb(6, 85, 138);
+    /* Calculamos la posición de cada icono en el círculo */
+    transform: translate(-50%, -50%) rotateY(calc(var(--i) * (360deg / 6))) translateZ(250px);
+}
+
+/* Evita que los iconos giren sobre su propio eje y siempre miren al frente */
+.icon-card i, .icon-card span {
+    animation: counterRotate 20s linear infinite;
+}
+
+.icon-card i { font-size: 1.5rem; color: #4facfe; }
+.icon-card span { font-size: 0.7rem; margin-top: 5px; }
+
+/* Animación de la Órbita */
+@keyframes rotateOrbit {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+/* Contra-rotación para que el texto sea legible */
+@keyframes counterRotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(-360deg); }
+}
+/* FOOTER*/
+/* Contenedor principal crece para ocupar espacio */
+#main-content {
+    flex: 1 0 auto; /* ocupa todo el espacio disponible */
+}
+
+/* Footer */
+footer {
+    flex-shrink: 0; /* nunca se encoge */
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: rgb(255, 253, 253);
+    padding: 40px 0;
+    text-align: center;
+}
+
+
+

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios Tecnológicos - Todo en Uno</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/common.css">
+        <link rel="stylesheet" href="/assets/css/index.css">
+        <link rel="stylesheet" href="/assets/css/servicios.css">
+          <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.28/build/spline-viewer.js"></script>
+        <style>
+    spline-viewer {
+      width: 100%;
+      height: 500px; /* Ajusta la altura que quieras */
+      display: block;
+    }
+  </style>
+</head>
+<body>
+ <div id="header-components"></div>
+
+<section class="page-header">
+    <div class="container page-header-content text-center">
+        <h1 class="display-3 fw-bold mb-3">Servicios Tecnológicos</h1>
+        <p class="lead">Ofrecemos sistemas, páginas web y soporte técnico.</p>
+    </div>
+</section>
+   <section class="team-section container my-5">
+  <h2 class="text-center mb-5">Tecnología que impulsa tu crecimiento.</h2>
+
+  <div class="row g-4">
+    <!-- Card 1 -->
+    <div class="col-md-4 col-lg-3">
+      <div class="team-card">
+        <img src="/assets/img/servicios/softweb.png" alt="Desarrollador Web">
+        <div class="team-info">
+          <h5>Sistemas y Software Personalizados</h5>
+          <p>Desarrollador Full Stack</p>
+          <span>@OswaldoSZ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="col-md-4 col-lg-3">
+      <div class="team-card">
+        <img src="assets/img/servicios/web1.jpg" alt="DevOps">
+        <div class="team-info">
+          <h5>Paginas web</h5>
+          <p>Desarrollador Web</p>
+          <span>@AndySX</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="col-md-4 col-lg-3">
+      <div class="team-card">
+        <img src="assets/img/servicios/soporte.jpg" alt="Diseñador UX">
+        <div class="team-info">
+          <h5>Soporte Técnico</h5>
+          <p>Especialista en hardware y software</p>
+          <span>@CesarDS</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="col-md-4 col-lg-3">
+      <div class="team-card">
+        <img src="assets/img/servicios/hosting.jpg" alt="Cloud Architect">
+        <div class="team-info">
+          <h5>Hosting Web</h5>
+          <p></p>
+          <span>@Servicioenpausa</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <section class="robot-section">
+ <div class="container d-flex align-items-center justify-content-between flex-wrap">
+        
+        <div class="robot-text-content">
+            <h2 class="robot-title">Nuestro Universo Tecnológico</h2>
+            <p class="robot-description">
+                Explora las herramientas y lenguajes con los que construimos el éxito de tu proyecto. 
+                Desde bases de datos robustas hasta interfaces modernas, utilizamos tecnología de 
+                vanguardia para garantizar escalabilidad y rendimiento en cada solución digital.
+            </p>
+        </div>
+    <div class="universe">
+        <div class="robot-center">
+            <spline-viewer url="https://prod.spline.design/AmRbRwpsjMXTfLlO/scene.splinecode"></spline-viewer>
+        </div>
+
+        <div class="orbit">
+            <div class="icon-card" style="--i:1;"><i class="fas fa-database"></i><span>SQL</span></div>
+            <div class="icon-card" style="--i:2;"><i class="fab fa-python"></i><span>Python</span></div>
+            <div class="icon-card" style="--i:3;"><i class="fab fa-js"></i><span>JS</span></div>
+            <div class="icon-card" style="--i:4;"><i class="fas fa-code"></i><span>C#</span></div>
+            <div class="icon-card" style="--i:5;"><i class="fab fa-react"></i><span>React</span></div>
+            <div class="icon-card" style="--i:6;"><i class="fas fa-cloud"></i><span>Cloud</span></div>
+        </div>
+    </div>
+</section>   
+    
+
+    <footer>
+        <p>¡Contáctanos para más detalles! Garantizamos calidad y satisfacción.</p>
+    </footer>
+    <div id="footer-components"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Cargar header
+    fetch('header.html')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('header-components').innerHTML = data;
+
+            // Lista de scripts a cargar después del header
+            const scriptsToLoad = [
+                'assets/js/common.js',
+                'assets/js/nosotros.js'
+            ];
+
+            scriptsToLoad.forEach(src => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.defer = true; // opcional pero recomendado
+                document.body.appendChild(script);
+            });
+        });
+
+    // Cargar footer
+    fetch('footer.html')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('footer-components').innerHTML = data;
+        });
+</script>
+</div>
+</body>
+</html>
