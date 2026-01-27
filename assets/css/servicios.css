@@ -1,228 +1,758 @@
-/* 1. Elimina el margen del body para que el header pegue arriba */
-body { 
-    font-family: Arial, sans-serif; 
-    margin: 0; /* Cambiado de 20px a 0 */
-    background-color: #f4f4f4; 
+/* ===================================
+   CONFIGURACIÓN BASE Y VARIABLES
+   =================================== */
+:root {
+    --primary-dark: #1a1a1a;
+    --secondary-dark: #2d2d2d;
+    --accent-blue: #4facfe;
+    --accent-cyan: #00f2fe;
+    --text-light: #ffffff;
+    --text-muted: #b0b0b0;
+    --card-bg: #111;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* 2. Si quieres que el header de servicios se vea igual al de nosotros */
+* {
+    box-sizing: border-box;
+}
+
+body { 
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+}
+
+/* ===================================
+   HEADER / HERO SECTION
+   =================================== */
 .page-header {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    padding: 120px 0 60px; /* Padding superior para dar espacio al navbar */
-    color: white;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+    padding: 140px 0 80px;
+    color: var(--text-light);
     position: relative;
+    overflow: hidden;
     text-align: center;
 }
 
-/* 3. Ajusta el header viejo que tenías por si decides no usar la clase .page-header */
-header { 
-    text-align: center; 
-    background-color: #272626; 
-    color: white; 
-    padding: 100px 20px 50px; /* Más padding arriba para que no lo tape el navbar */
-    margin: 0; /* Asegúrate de que no tenga margen */
+/* Partículas animadas en el header */
+.header-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
 }
 
-/*CSS DE LOS CARD*/
+.header-particles::before,
+.header-particles::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(79, 172, 254, 0.15) 0%, transparent 70%);
+    animation: float 20s ease-in-out infinite;
+}
 
+.header-particles::before {
+    top: -100px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.header-particles::after {
+    bottom: -100px;
+    right: -100px;
+    animation-delay: 10s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(50px, 50px) scale(1.1); }
+}
+
+.page-header-content {
+    position: relative;
+    z-index: 1;
+}
+
+.page-header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.5px;
+}
+
+.page-header .lead {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Animaciones de entrada */
+.animate-fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+.animate-fade-in-delay {
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================
+   SECCIÓN DE SERVICIOS - CARDS
+   =================================== */
 .team-section {
-  color: #ffffff;
-  font-family: "Sekuya", system-ui;
-  font-weight: 400;
-  font-style: normal
-}
-.team-section.container h2 {
-  color: #555454;
+    padding: 80px 0;
 }
 
+.section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    color: #2d2d2d;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+    border-radius: 2px;
+}
 
 .team-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  background: #111;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    background: var(--card-bg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: var(--transition-smooth);
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
 }
 
-.team-card img {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  filter: grayscale(100%);
-  transition: filter 0.3s ease, transform 0.3s ease;
+.team-card.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.team-card:hover img {
-  filter: grayscale(0%);
-  transform: scale(1.05);
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(79, 172, 254, 0.3);
+}
+
+.card-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(0.7);
+    transition: var(--transition-smooth);
+    will-change: transform, filter;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.4), rgba(0, 242, 254, 0.4));
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.team-card:hover .card-image-wrapper img {
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.1);
+}
+
+.team-card:hover .card-overlay {
+    opacity: 1;
 }
 
 .team-info {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 15px;
-  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    padding: 20px;
+    color: var(--text-light);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.7));
+    position: relative;
 }
 
 .team-info h5 {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
+    margin: 0 0 8px 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
 }
 
 .team-info p {
-  margin: 2px 0;
-  font-size: 0.9rem;
-  opacity: 0.8;
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
 }
 
 .team-info span {
-  font-size: 0.8rem;
-  opacity: 0.6;
+    font-size: 0.8rem;
+    color: var(--accent-blue);
+    font-weight: 500;
 }
-/*Ajustes para las herrameinta del robot oca */
-.robot-section {
-    height: 600px;
+
+/* ===================================
+   SECCIÓN DE TECNOLOGÍAS (OPTIMIZADA)
+   =================================== */
+.tech-universe-section {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fondo con patrón de grid */
+.tech-universe-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(79, 172, 254, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79, 172, 254, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
+}
+
+.tech-text-content {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.tech-text-content.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.tech-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.tech-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    text-align: justify;
+    margin-bottom: 2rem;
+}
+
+/* Estadísticas */
+.tech-stats {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #fdfdfd; /* Fondo oscuro para resaltar */
-    overflow: hidden;
-    perspective: 1000px;
-}
-.robot-section {
-    padding: 80px 0;
-    background-color: #fdfdfd; /* Fondo claro según tu código */
-    overflow: hidden;
+    gap: 30px;
+    margin-top: 2rem;
+    flex-wrap: wrap;
 }
 
-/* Contenedor del texto */
-.robot-text-content {
-    flex: 1;
-    min-width: 300px; /* Evita que se vea muy pequeño en móviles */
-    max-width: 500px; /* Limita el ancho para que sea legible */
-    padding-right: 40px; /* Espacio entre texto y robot */
-    text-align: left; /* Alinea el título a la izquierda */
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-/* Título */
-.robot-title {
+.stat-number {
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 20px;
-    color: #1a1a1a;
+    font-family: 'Space Grotesk', sans-serif;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
-/* Párrafo Justificado */
-.robot-description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    text-align: justify; /* Aquí se justifica el texto */
-    color: #555;
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Ajuste del contenedor del robot para que no ocupe toda la pantalla */
-.universe {
-    flex: 1;
+/* ===================================
+   VISUALIZACIÓN 3D CON CSS PURO
+   =================================== */
+.tech-visualization {
+    position: relative;
+    min-height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
-    min-height: 500px;
+    perspective: 1200px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-/* Responsivo: En celulares el texto va arriba y el robot abajo */
-@media (max-width: 992px) {
-    .robot-text-content {
-        padding-right: 0;
-        text-align: center;
-        margin-bottom: 50px;
-    }
-    .robot-description {
-        text-align: center; /* En móvil se ve mejor centrado */
-    }
+.tech-visualization.visible {
+    opacity: 1;
+    transform: scale(1);
 }
 
-.universe {
+.tech-sphere {
     position: relative;
     width: 500px;
     height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     transform-style: preserve-3d;
 }
 
-.robot-center {
-    width: 400px;
-    height: 400px;
-    z-index: 2;
-}
-
-/* La órbita que gira */
-.orbit {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    animation: rotateOrbit 20s linear infinite;
-    transform-style: preserve-3d;
-}
-
-
-.icon-card {
+/* Centro pulsante */
+.tech-center {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 60px;
-    height: 60px;
-    background: rgba(104, 103, 103, 0.1);
-    border: 1px solid var(--primary-blue);
-    backdrop-filter: blur(5px);
-    border-radius: 12px;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.center-icon {
+    font-size: 3rem;
+    color: var(--accent-blue);
+    z-index: 2;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+/* Anillos pulsantes */
+.pulse-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border: 2px solid var(--accent-blue);
+    border-radius: 50%;
+    animation: pulseRing 2s ease-out infinite;
+    opacity: 0;
+}
+
+.pulse-ring.delay-1 {
+    animation-delay: 0.6s;
+}
+
+.pulse-ring.delay-2 {
+    animation-delay: 1.2s;
+}
+
+@keyframes pulseRing {
+    0% {
+        width: 100px;
+        height: 100px;
+        opacity: 0.8;
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+    }
+}
+
+/* Órbitas */
+.tech-orbit {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+}
+
+.orbit-1 {
+    animation: rotateOrbit 20s linear infinite;
+}
+
+.orbit-2 {
+    animation: rotateOrbit 15s linear infinite reverse;
+}
+
+@keyframes rotateOrbit {
+    from { transform: translate(-50%, -50%) rotateY(0deg); }
+    to { transform: translate(-50%, -50%) rotateY(360deg); }
+}
+
+/* Iconos de tecnología */
+.tech-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    background: rgba(26, 26, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(79, 172, 254, 0.3);
+    border-radius: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: rgb(6, 85, 138);
-    /* Calculamos la posición de cada icono en el círculo */
-    transform: translate(-50%, -50%) rotateY(calc(var(--i) * (360deg / 6))) translateZ(250px);
+    gap: 5px;
+    color: var(--text-light);
+    transform-origin: center;
+    transform: 
+        translate(-50%, -50%) 
+        rotateY(var(--angle)) 
+        translateZ(220px);
+    transition: var(--transition-smooth);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    will-change: transform;
 }
 
-/* Evita que los iconos giren sobre su propio eje y siempre miren al frente */
-.icon-card i, .icon-card span {
+.tech-icon.small {
+    width: 60px;
+    height: 60px;
+    transform: 
+        translate(-50%, -50%) 
+        rotateY(var(--angle)) 
+        translateZ(160px);
+}
+
+.tech-icon:hover {
+    border-color: var(--accent-blue);
+    background: rgba(79, 172, 254, 0.2);
+    transform: 
+        translate(-50%, -50%) 
+        rotateY(var(--angle)) 
+        translateZ(250px) 
+        scale(1.1);
+}
+
+.tech-icon i {
+    font-size: 2rem;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     animation: counterRotate 20s linear infinite;
 }
 
-.icon-card i { font-size: 1.5rem; color: #4facfe; }
-.icon-card span { font-size: 0.7rem; margin-top: 5px; }
-
-/* Animación de la Órbita */
-@keyframes rotateOrbit {
-    from { transform: rotateY(0deg); }
-    to { transform: rotateY(360deg); }
+.tech-icon.small i {
+    font-size: 1.5rem;
 }
 
-/* Contra-rotación para que el texto sea legible */
+.tech-icon span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    animation: counterRotate 20s linear infinite;
+    white-space: nowrap;
+}
+
 @keyframes counterRotate {
     from { transform: rotateY(0deg); }
     to { transform: rotateY(-360deg); }
 }
-/* FOOTER*/
-/* Contenedor principal crece para ocupar espacio */
-#main-content {
-    flex: 1 0 auto; /* ocupa todo el espacio disponible */
+
+/* Partículas flotantes */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-blue);
+    border-radius: 50%;
+    top: var(--y);
+    left: var(--x);
+    animation: particleFloat 3s ease-in-out infinite var(--delay);
+    opacity: 0.6;
 }
 
-/* Footer */
+@keyframes particleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
 footer {
-    flex-shrink: 0; /* nunca se encoge */
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: rgb(255, 253, 253);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+    color: var(--text-light);
     padding: 40px 0;
     text-align: center;
+    margin-top: 0;
 }
 
+footer p {
+    margin: 0;
+    font-size: 1rem;
+}
 
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
 
+/* Tablets grandes */
+@media (max-width: 1200px) {
+    .tech-sphere {
+        width: 450px;
+        height: 450px;
+    }
+    
+    .tech-icon {
+        transform: 
+            translate(-50%, -50%) 
+            rotateY(var(--angle)) 
+            translateZ(190px);
+    }
+}
+
+/* Tablets */
+@media (max-width: 992px) {
+    .page-header {
+        padding: 120px 0 60px;
+    }
+    
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .tech-text-content {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    .tech-description {
+        text-align: center;
+    }
+    
+    .tech-stats {
+        justify-content: center;
+    }
+    
+    .tech-title {
+        font-size: 2.2rem;
+    }
+    
+    .tech-sphere {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .tech-icon {
+        width: 70px;
+        height: 70px;
+        transform: 
+            translate(-50%, -50%) 
+            rotateY(var(--angle)) 
+            translateZ(170px);
+    }
+    
+    .tech-icon i {
+        font-size: 1.8rem;
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 2rem;
+    }
+    
+    .page-header .lead {
+        font-size: 1rem;
+    }
+    
+    .team-section {
+        padding: 60px 0;
+    }
+    
+    .card-image-wrapper {
+        height: 220px;
+    }
+    
+    .tech-universe-section {
+        padding: 60px 0;
+    }
+    
+    .tech-title {
+        font-size: 1.8rem;
+    }
+    
+    .tech-description {
+        font-size: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .tech-sphere {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .tech-visualization {
+        min-height: 400px;
+    }
+    
+    .tech-icon {
+        width: 60px;
+        height: 60px;
+        transform: 
+            translate(-50%, -50%) 
+            rotateY(var(--angle)) 
+            translateZ(140px);
+    }
+    
+    .tech-icon.small {
+        width: 50px;
+        height: 50px;
+        transform: 
+            translate(-50%, -50%) 
+            rotateY(var(--angle)) 
+            translateZ(100px);
+    }
+    
+    .tech-icon i {
+        font-size: 1.5rem;
+    }
+    
+    .tech-icon.small i {
+        font-size: 1.2rem;
+    }
+    
+    .tech-icon span {
+        font-size: 0.65rem;
+    }
+    
+    .center-icon {
+        font-size: 2.5rem;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 576px) {
+    .page-header {
+        padding: 100px 20px 50px;
+    }
+    
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .team-info h5 {
+        font-size: 1rem;
+    }
+    
+    .tech-sphere {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .tech-icon {
+        width: 55px;
+        height: 55px;
+        transform: 
+            translate(-50%, -50%) 
+            rotateY(var(--angle)) 
+            translateZ(120px);
+    }
+    
+    .tech-icon.small {
+        display: none; /* Ocultar órbita secundaria en móviles pequeños */
+    }
+    
+    .tech-stats {
+        gap: 20px;
+    }
+    
+    .stat-number {
+        font-size: 1.75rem;
+    }
+}
+
+/* ===================================
+   OPTIMIZACIONES DE RENDIMIENTO
+   =================================== */
+
+/* Reducir movimiento para usuarios con preferencias de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* GPU acceleration para elementos animados */
+.tech-orbit,
+.tech-icon,
+.team-card,
+.card-image-wrapper img {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+}
