@@ -1,206 +1,225 @@
-// Productos para filtro selección - MANTIENE LA FUNCIONALIDAD ORIGINAL
-var portfolioIsotope = $('.portfolio-container').isotope({
-  itemSelector: '.portfolio-item',
-  layoutMode: 'fitRows'
-});
+// ==============================
+// CONFIGURACIÓN
+// ==============================
 
-// Función para verificar y mostrar/ocultar el botón "Ver más"
-function updateLoadMoreButton() {
-  var currentFilter = $('#portfolio-flters li.filter-active').data('filter');
-  var visibleItems;
-  
-  if (currentFilter === '*') {
-    visibleItems = $('.portfolio-item');
-  } else {
-    visibleItems = $('.portfolio-item').filter(currentFilter);
-  }
-  
-  var totalItems = visibleItems.length;
-  
-  // Mostrar botón solo si hay más de 6 productos
-  if (totalItems > 6) {
-    $('#load-more-container').show();
-    
-    // Ocultar items después del 6to
-    visibleItems.each(function(index) {
-      if (index >= 6) {
-        $(this).addClass('hidden-item');
-      }
-    });
-    
-    // Actualizar texto del botón
-    var hiddenCount = visibleItems.filter('.hidden-item').length;
-    if (hiddenCount > 0) {
-      $('#load-more-btn').text('Ver más (' + hiddenCount + ')');
-    } else {
-      $('#load-more-btn').text('Ver menos');
-    }
-  } else {
-    $('#load-more-container').hide();
-    visibleItems.removeClass('hidden-item');
-  }
-  
-  // Aplicar visibilidad
-  portfolioIsotope.isotope();
+const PRODUCTS_URL = 'data/productos.json'; // luego será una API
+const PRODUCTS_PER_PAGE = 6;
+
+// ==============================
+// ESTADO
+// ==============================
+
+let allProducts = [];
+let filteredProducts = [];
+let currentFilter = 'all';
+let currentPage = 1;
+
+// ==============================
+// ELEMENTOS DOM
+// ==============================
+
+const container = document.getElementById('products-container');
+const loadMoreContainer = document.getElementById('load-more-container');
+const loadMoreBtn = document.getElementById('load-more-btn');
+const filters = document.querySelectorAll('#portfolio-flters li');
+
+// Lightbox
+const lightbox = document.getElementById('custom-lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCaption = document.getElementById('lightbox-caption');
+const lightboxClose = document.querySelector('.lightbox-close');
+
+// Modal
+const modalTitle = document.getElementById('modalTitle');
+const modalDescription = document.getElementById('modalDescription');
+const modalVideo = document.getElementById('modalVideo');
+const modalGithub = document.getElementById('modalGithub');
+
+// ==============================
+// INIT
+// ==============================
+
+document.addEventListener('DOMContentLoaded', init);
+
+async function init() {
+  await loadProducts();
+  applyFilter('all');
+  initFilters();
+  initLoadMore();
+  initLightbox();
 }
 
-// Filtro de portfolios - MANTIENE LA FUNCIONALIDAD ORIGINAL
-$('#portfolio-flters li').on('click', function() {
-  $("#portfolio-flters li").removeClass('filter-active');
-  $(this).addClass('filter-active');
+// ==============================
+// CARGA DE DATOS
+// ==============================
 
-  var filterValue = $(this).data('filter');
-  
-  // Resetear items ocultos antes de aplicar nuevo filtro
-  $('.portfolio-item').removeClass('hidden-item');
-  
-  portfolioIsotope.isotope({ 
-    filter: function() {
-      var $this = $(this);
-      var matchesFilter = filterValue === '*' || $this.is(filterValue);
-      var isHidden = $this.hasClass('hidden-item');
-      return matchesFilter && !isHidden;
-    }
-  });
-  
-  // Actualizar botón "Ver más" después del filtro
-  setTimeout(updateLoadMoreButton, 100);
-});
-
-// Botón "Ver más"
-$('#load-more-btn').on('click', function() {
-  var currentFilter = $('#portfolio-flters li.filter-active').data('filter');
-  var hiddenItems = $('.portfolio-item.hidden-item').filter(currentFilter === '*' ? '*' : currentFilter);
-  
-  if (hiddenItems.length > 0) {
-    // Mostrar más items
-    hiddenItems.removeClass('hidden-item');
-    $(this).text('Ver menos');
-  } else {
-    // Ocultar items (volver al estado inicial)
-    var visibleItems = currentFilter === '*' ? 
-      $('.portfolio-item') : 
-      $('.portfolio-item').filter(currentFilter);
-    
-    visibleItems.each(function(index) {
-      if (index >= 6) {
-        $(this).addClass('hidden-item');
-      }
-    });
-    
-    var hiddenCount = visibleItems.filter('.hidden-item').length;
-    $(this).text('Ver más (' + hiddenCount + ')');
-  }
-  
-  // Re-aplicar isotope
-  portfolioIsotope.isotope({
-    filter: function() {
-      var $this = $(this);
-      var filterValue = $('#portfolio-flters li.filter-active').data('filter');
-      var matchesFilter = filterValue === '*' || $this.is(filterValue);
-      var isHidden = $this.hasClass('hidden-item');
-      return matchesFilter && !isHidden;
-    }
-  });
-});
-
-// CUSTOM LIGHTBOX FUNCTIONALITY
-$(document).ready(function() {
-  // Inicializar botón "Ver más" al cargar la página
-  setTimeout(updateLoadMoreButton, 500);
-  
-  // Custom Lightbox
-  var lightbox = $('#custom-lightbox');
-  var lightboxImg = $('#lightbox-img');
-  var lightboxCaption = $('#lightbox-caption');
-  var closeBtn = $('.lightbox-close');
-  
-  // Prevenir que lightbox2 interfiera
-  $('.link-preview').on('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    
-    var imgSrc = $(this).attr('href');
-    var caption = $(this).data('title');
-    
-    // Mostrar lightbox personalizado
-    lightboxImg.attr('src', imgSrc);
-    lightboxCaption.text(caption);
-    lightbox.addClass('active');
-    
-    // Prevenir scroll del body
-    $('body').css('overflow', 'hidden');
-  });
-  
-  // Cerrar lightbox al hacer click en X
-  closeBtn.on('click', function() {
-    closeLightbox();
-  });
-  
-  // Cerrar lightbox al hacer click fuera de la imagen
-  lightbox.on('click', function(e) {
-    if (e.target === this) {
-      closeLightbox();
-    }
-  });
-  
-  // Cerrar lightbox con tecla ESC
-  $(document).on('keydown', function(e) {
-    if (e.key === 'Escape' && lightbox.hasClass('active')) {
-      closeLightbox();
-    }
-  });
-  
-  function closeLightbox() {
-    lightbox.removeClass('active');
-    $('body').css('overflow', 'auto');
-  }
-  
-  // Ajustar imagen al tamaño de la pantalla
-  lightboxImg.on('load', function() {
-    var img = $(this);
-    var windowWidth = $(window).width();
-    var windowHeight = $(window).height();
-    var imgWidth = img[0].naturalWidth;
-    var imgHeight = img[0].naturalHeight;
-    
-    // Solo redimensionar si la imagen es más grande que la ventana
-    if (imgWidth > windowWidth * 0.9 || imgHeight > windowHeight * 0.9) {
-      img.css({
-        'max-width': '90%',
-        'max-height': '90vh',
-        'width': 'auto',
-        'height': 'auto'
-      });
-    } else {
-      // Mantener tamaño original si es más pequeña
-      img.css({
-        'max-width': '90%',
-        'max-height': '90vh',
-        'width': 'auto',
-        'height': 'auto'
-      });
-    }
-  });
-});
-
-// Responsive: Desactivar position absolute en móviles
-function handleResponsiveLayout() {
-  if ($(window).width() <= 575) {
-    // En móvil, asegurar que Isotope use el layout correcto
-    portfolioIsotope.isotope({
-      layoutMode: 'vertical'
-    });
-  } else {
-    // En desktop, usar fitRows
-    portfolioIsotope.isotope({
-      layoutMode: 'fitRows'
-    });
+async function loadProducts() {
+  try {
+    const res = await fetch(PRODUCTS_URL);
+    allProducts = await res.json();
+  } catch (error) {
+    console.error('Error cargando productos:', error);
   }
 }
 
-// Ejecutar al cargar y al redimensionar
-$(window).on('load resize', function() {
-  handleResponsiveLayout();
-  portfolioIsotope.isotope('layout');
+
+// ==============================
+// FILTROS
+// ==============================
+
+function initFilters() {
+  filters.forEach(filter => {
+    filter.addEventListener('click', () => {
+      filters.forEach(f => f.classList.remove('filter-active'));
+      filter.classList.add('filter-active');
+
+      currentFilter = filter.dataset.filter;
+      currentPage = 1;
+
+      applyFilter(currentFilter);
+    });
+  });
+}
+
+function applyFilter(filter) {
+  filteredProducts =
+    filter === 'all'
+      ? allProducts
+      : allProducts.filter(p => p.categoria === filter);
+
+  renderProducts();
+  updateLoadMore();
+}
+
+// ==============================
+// RENDER
+// ==============================
+
+function renderProducts() {
+  container.innerHTML = '';
+
+  const visibleProducts = filteredProducts.slice(
+    0,
+    currentPage * PRODUCTS_PER_PAGE
+  );
+
+  visibleProducts.forEach(product => {
+    container.appendChild(createProductCard(product));
+  });
+}
+
+// ==============================
+// CARD
+// ==============================
+
+function createProductCard(product) {
+  const col = document.createElement('div');
+  col.className = 'col-lg-4 col-md-6 col-12 portfolio-item';
+
+  col.innerHTML = `
+    <div class="portfolio-wrap h-100">
+      <figure>
+        <img src="${product.imagen}" alt="${product.titulo}">
+        
+        <div class="portfolio-actions">
+          <button class="btn-preview" title="Ampliar imagen">
+            <i class="fas fa-search-plus"></i>
+          </button>
+          <button class="btn-details" title="Ver detalles">
+            <i class="fas fa-info-circle"></i>
+          </button>
+          <a href="${product.github || '#'}" target="_blank" title="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+        </div>
+      </figure>
+
+      <div class="portfolio-info">
+        <h4>${product.titulo}</h4>
+        <p>${product.descripcion}</p>
+      </div>
+    </div>
+  `;
+
+  // Eventos
+  col.querySelector('.btn-preview')
+    .addEventListener('click', () => openLightbox(product));
+
+  col.querySelector('.btn-details')
+    .addEventListener('click', () => openModal(product));
+
+  return col;
+}
+
+// ==============================
+// VER MÁS
+// ==============================
+
+function initLoadMore() {
+  loadMoreBtn.addEventListener('click', () => {
+    currentPage++;
+    renderProducts();
+    updateLoadMore();
+  });
+}
+
+function updateLoadMore() {
+  if (filteredProducts.length > currentPage * PRODUCTS_PER_PAGE) {
+    loadMoreContainer.style.display = 'block';
+  } else {
+    loadMoreContainer.style.display = 'none';
+  }
+}
+
+// ==============================
+// LIGHTBOX
+// ==============================
+
+function initLightbox() {
+  lightboxClose.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+}
+
+function openLightbox(product) {
+  lightboxImg.src = product.imagen;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ==============================
+// MODAL
+// ==============================
+
+function openModal(product) {
+  modalTitle.textContent = product.titulo;
+  modalDescription.textContent = product.descripcion;
+
+  // video placeholder (luego vendrá desde BD)
+  modalVideo.src = product.video || '';
+
+  modalGithub.href = product.github || '#';
+
+  const modal = new bootstrap.Modal(
+    document.getElementById('productModal')
+  );
+  modal.show();
+}
+
+const productModalEl = document.getElementById('productModal');
+
+productModalEl.addEventListener('hidden.bs.modal', () => {
+  // Detiene el video (corta audio sí o sí)
+  modalVideo.src = '';
 });
