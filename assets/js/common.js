@@ -1,76 +1,33 @@
-// Login Dropdown Toggle
-const loginBtn = document.getElementById('loginBtn');
-const loginDropdown = document.getElementById('loginDropdown');
-
-if (loginBtn && loginDropdown) {
-    loginBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        loginDropdown.classList.toggle('active');
-    });
-
-    // Cerrar dropdown al hacer clic fuera
-    document.addEventListener('click', (e) => {
-        if (!loginDropdown.contains(e.target) && !loginBtn.contains(e.target)) {
-            loginDropdown.classList.remove('active');
-        }
-    });
+// ==============================
+// UTILIDADES
+// ==============================
+function isMobile() {
+    return window.innerWidth <= 991;
 }
 
-// Side Panel Register
-const showRegister = document.getElementById('showRegister');
-const sidePanel = document.getElementById('sidePanel');
-const closePanel = document.getElementById('closePanel');
+// ==============================
+// ELEMENTOS BASE
+// ==============================
 const overlay = document.getElementById('overlay');
 
-if (showRegister && sidePanel) {
-    showRegister.addEventListener('click', (e) => {
-        e.preventDefault();
-        sidePanel.classList.add('active');
-        overlay.classList.add('active');
-        if (loginDropdown) loginDropdown.classList.remove('active');
-    });
-}
+// ==============================
+// OVERLAY (CIERRA MENÚ MÓVIL Y CONTACTO)
+// ==============================
+overlay.addEventListener('click', () => {
+    mobileMenuPanel.classList.remove('active');
+    overlay.classList.remove('active');
+    contactModal.classList.remove('active');
+});
 
-if (closePanel) {
-    closePanel.addEventListener('click', () => {
-        sidePanel.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-}
 
-// Cambiar de registro a login
-const loginLink = document.getElementById('loginLink');
-if (loginLink) {
-    loginLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        sidePanel.classList.remove('active');
-        overlay.classList.remove('active');
-        setTimeout(() => {
-            if (loginDropdown) loginDropdown.classList.add('active');
-        }, 400);
-    });
-}
-
-// Overlay click - cierra todo
-if (overlay) {
-    overlay.addEventListener('click', () => {
-        sidePanel.classList.remove('active');
-        overlay.classList.remove('active');
-        const mobileMenuPanel = document.getElementById('mobileMenuPanel');
-        const contactModal = document.getElementById('contactModal');
-        if (mobileMenuPanel) mobileMenuPanel.classList.remove('active');
-        if (contactModal) contactModal.classList.remove('active');
-    });
-}
-
-// Mobile Menu Panel
+// ==============================
+// MOBILE MENU
+// ==============================
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenuPanel = document.getElementById('mobileMenuPanel');
 const closeMobileMenu = document.getElementById('closeMobileMenu');
-const mobileLoginBtn = document.getElementById('mobileLoginBtn');
 
-if (mobileMenuBtn && mobileMenuPanel) {
+if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenuPanel.classList.add('active');
         overlay.classList.add('active');
@@ -84,47 +41,43 @@ if (closeMobileMenu) {
     });
 }
 
-if (mobileLoginBtn) {
-    mobileLoginBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        mobileMenuPanel.classList.remove('active');
-        overlay.classList.remove('active');
-        setTimeout(() => {
-            if (loginDropdown) loginDropdown.classList.add('active');
-        }, 400);
-    });
-}
-
-// Floating Contact Button
+// ==============================
+// CONTACTO FLOTANTE
+// ==============================
 const mainContactBtn = document.getElementById('mainContactBtn');
 const contactOptions = document.getElementById('contactOptions');
 const whatsappBtn = document.getElementById('whatsappBtn');
 const emailBtn = document.getElementById('emailBtn');
-const contactModal = document.getElementById('contactModal');
-const closeContactModal = document.getElementById('closeContactModal');
 
-if (mainContactBtn && contactOptions) {
+if (mainContactBtn) {
     mainContactBtn.addEventListener('click', () => {
         contactOptions.classList.toggle('active');
-        mainContactBtn.style.transform = contactOptions.classList.contains('active') ? 'rotate(45deg)' : 'rotate(0deg)';
+        mainContactBtn.style.transform =
+            contactOptions.classList.contains('active')
+                ? 'rotate(45deg)'
+                : 'rotate(0deg)';
     });
 }
 
 if (whatsappBtn) {
     whatsappBtn.addEventListener('click', () => {
-        // Aquí puedes agregar el número de WhatsApp cuando lo tengas
-        // window.open('https://wa.me/51999999999', '_blank');
-        console.log('WhatsApp clicked - Funcionalidad pendiente');
+        console.log('WhatsApp pendiente');
         contactOptions.classList.remove('active');
-        if (mainContactBtn) mainContactBtn.style.transform = 'rotate(0deg)';
+        mainContactBtn.style.transform = 'rotate(0deg)';
     });
 }
 
+// ==============================
+// CONTACT MODAL
+// ==============================
+const contactModal = document.getElementById('contactModal');
+const closeContactModal = document.getElementById('closeContactModal');
+const contactForm = document.getElementById('contactForm');
+
 if (emailBtn) {
     emailBtn.addEventListener('click', () => {
-        if (contactModal) contactModal.classList.add('active');
+        contactModal.classList.add('active');
         contactOptions.classList.remove('active');
-        if (mainContactBtn) mainContactBtn.style.transform = 'rotate(0deg)';
     });
 }
 
@@ -142,51 +95,49 @@ if (contactModal) {
     });
 }
 
-// Form submit
-const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('¡Mensaje enviado con éxito! Te responderemos pronto.');
+        alert('¡Mensaje enviado con éxito!');
         contactModal.classList.remove('active');
-        e.target.reset();
+        contactForm.reset();
     });
 }
 
-// Mobile contact button
+// ==============================
+// BOTONES CONTACTO NAV / MOBILE
+// ==============================
 const mobileContactBtn = document.getElementById('mobileContactBtn');
+const navContactBtn = document.getElementById('navContactBtn');
+const heroContactBtn = document.getElementById('heroContactBtn');
+const ctaContactBtn = document.getElementById('ctaContactBtn');
+
 if (mobileContactBtn) {
     mobileContactBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (contactModal) contactModal.classList.add('active');
-        if (mobileMenuPanel) mobileMenuPanel.classList.remove('active');
-        if (overlay) overlay.classList.remove('active');
+        contactModal.classList.add('active');
+        mobileMenuPanel.classList.remove('active');
+        overlay.classList.remove('active');
     });
 }
 
-// Navbar contact button
-const navContactBtn = document.getElementById('navContactBtn');
 if (navContactBtn) {
     navContactBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (contactModal) contactModal.classList.add('active');
+        contactModal.classList.add('active');
     });
 }
 
-// Hero contact button (solo existe en index)
-const heroContactBtn = document.getElementById('heroContactBtn');
 if (heroContactBtn) {
     heroContactBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (contactModal) contactModal.classList.add('active');
+        contactModal.classList.add('active');
     });
 }
 
-// CTA contact button (solo existe en nosotros)
-const ctaContactBtn = document.getElementById('ctaContactBtn');
 if (ctaContactBtn) {
     ctaContactBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        if (contactModal) contactModal.classList.add('active');
+        contactModal.classList.add('active');
     });
 }

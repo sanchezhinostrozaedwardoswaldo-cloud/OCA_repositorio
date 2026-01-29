@@ -16,7 +16,7 @@
         <li class="nav-item"><a class="nav-link" href="nosotros.html"><i class="fas fa-users me-2"></i>Nosotros</a></li>
         <li class="nav-item"><a class="nav-link" href="#" id="mobileContactBtn"><i class="fas fa-envelope me-2"></i>Contacto</a></li>
         <li class="nav-item mt-3">
-            <a class="nav-link btn-login text-center" href="#" id="mobileLoginBtn">
+            <a class="nav-link btn-login text-center" href="login.html" id="mobileLoginBtn">
                 <i class="fas fa-user me-2"></i>Iniciar Sesión
             </a>
         </li>
@@ -41,86 +41,15 @@
                 <li class="nav-item"><a class="nav-link" href="nosotros.html">Nosotros</a></li>
                 <li class="nav-item"><a class="nav-link" href="#" id="navContactBtn">Contacto</a></li>
                 <li class="nav-item position-relative">
-                    <a class="nav-link btn-login" href="#" id="loginBtn">
+                    <a class="nav-link btn-login text-center" href="login.html">
                         <i class="fas fa-user me-2"></i>Iniciar Sesión
                     </a>
-                    
-                    <!-- LOGIN DROPDOWN -->
-                    <div class="login-dropdown" id="loginDropdown">
-                        <h5 class="mb-3 text-center">Iniciar Sesión</h5>
-                        <input type="email" class="form-control" placeholder="Usuario o Email">
-                        <input type="password" class="form-control" placeholder="Contraseña">
-                        <button class="btn btn-primary w-100 mb-2">Ingresar</button>
-                        <div class="text-center">
-                            <small class="text-muted">¿No tienes cuenta?</small>
-                            <a href="#" class="text-primary" id="showRegister">Regístrate aquí</a>
-                        </div>
-                    </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- SIDE PANEL REGISTRO -->
-<div class="side-panel" id="sidePanel">
-    <div class="side-panel-header">
-        <h3><i class="fas fa-user-plus me-2"></i>Crear Cuenta</h3>
-        <button class="close-panel" id="closePanel">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
-    <div class="p-4">
-        <form>
-            <div class="row">
-                <div class="col-md-12 mb-3">
-                    <label class="form-label"><i class="fas fa-user me-1"></i>Nombre Completo</label>
-                    <input type="text" class="form-control" placeholder="Ingresa tu nombre completo">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label"><i class="fas fa-envelope me-1"></i>Email</label>
-                    <input type="email" class="form-control" placeholder="tu@email.com">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label"><i class="fas fa-phone me-1"></i>Teléfono</label>
-                    <input type="tel" class="form-control" placeholder="+51 999 999 999">
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label"><i class="fas fa-building me-1"></i>Empresa (opcional)</label>
-                <input type="text" class="form-control" placeholder="Nombre de tu empresa">
-            </div>
-            <div class="mb-3">
-                <label class="form-label"><i class="fas fa-user-circle me-1"></i>Usuario</label>
-                <input type="text" class="form-control" placeholder="Elige un nombre de usuario">
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label class="form-label"><i class="fas fa-lock me-1"></i>Contraseña</label>
-                    <input type="password" class="form-control" placeholder="Mínimo 8 caracteres">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label class="form-label"><i class="fas fa-lock me-1"></i>Confirmar</label>
-                    <input type="password" class="form-control" placeholder="Repite tu contraseña">
-                </div>
-            </div>
-            <div class="form-check mb-3">
-                <input class="form-check-input" type="checkbox" id="terms">
-                <label class="form-check-label" for="terms">
-                    Acepto los <a href="#" class="text-primary">términos y condiciones</a>
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">
-                <i class="fas fa-check me-2"></i>Registrarse
-            </button>
-            <div class="text-center mt-3">
-                <small class="text-muted">¿Ya tienes cuenta? <a href="#" id="loginLink" class="text-primary">Inicia sesión</a></small>
-            </div>
-        </form>
-    </div>
-</div>
 
 <!-- FLOATING CONTACT BUTTON -->
 <div class="floating-contact">
@@ -174,7 +103,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label"><i class="fas fa-comment me-1"></i>Mensaje</label>
-                    <textarea class="form-control" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
+                    <textarea class="form-control" id="comentario" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">
                     <i class="fas fa-paper-plane me-2"></i>Enviar Mensaje
@@ -183,3 +112,5 @@
         </div>
     </div>
 </div>
+
+

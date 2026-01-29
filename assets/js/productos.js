@@ -13,6 +13,8 @@ let allProducts = [];
 let filteredProducts = [];
 let currentFilter = 'all';
 let currentPage = 1;
+let expanded = false;
+
 
 // ==============================
 // ELEMENTOS DOM
@@ -33,6 +35,7 @@ const lightboxClose = document.querySelector('.lightbox-close');
 const modalTitle = document.getElementById('modalTitle');
 const modalDescription = document.getElementById('modalDescription');
 const modalVideo = document.getElementById('modalVideo');
+const modalDemo = document.getElementById('modalDemo');
 const modalGithub = document.getElementById('modalGithub');
 
 // ==============================
@@ -98,15 +101,15 @@ function applyFilter(filter) {
 function renderProducts() {
   container.innerHTML = '';
 
-  const visibleProducts = filteredProducts.slice(
-    0,
-    currentPage * PRODUCTS_PER_PAGE
-  );
+  const visibleProducts = expanded
+    ? filteredProducts
+    : filteredProducts.slice(0, PRODUCTS_PER_PAGE);
 
   visibleProducts.forEach(product => {
     container.appendChild(createProductCard(product));
   });
 }
+
 
 // ==============================
 // CARD
@@ -157,19 +160,30 @@ function createProductCard(product) {
 
 function initLoadMore() {
   loadMoreBtn.addEventListener('click', () => {
-    currentPage++;
+    expanded = !expanded;
+
     renderProducts();
     updateLoadMore();
+
+    if (!expanded) {
+      // vuelve suavemente arriba de productos
+      document
+        .getElementById('portfolio')
+        .scrollIntoView({ behavior: 'smooth' });
+    }
   });
 }
 
+
 function updateLoadMore() {
-  if (filteredProducts.length > currentPage * PRODUCTS_PER_PAGE) {
+  if (filteredProducts.length > PRODUCTS_PER_PAGE) {
     loadMoreContainer.style.display = 'block';
+    loadMoreBtn.textContent = expanded ? 'Ver menos' : 'Ver más';
   } else {
     loadMoreContainer.style.display = 'none';
   }
 }
+
 
 // ==============================
 // LIGHTBOX
@@ -206,16 +220,26 @@ function openModal(product) {
   modalTitle.textContent = product.titulo;
   modalDescription.textContent = product.descripcion;
 
-  // video placeholder (luego vendrá desde BD)
+  // Video
   modalVideo.src = product.video || '';
 
+  // GitHub
   modalGithub.href = product.github || '#';
+
+  // Demo
+  if (product.demo && product.demo.trim() !== '') {
+    modalDemo.href = product.demo;
+    modalDemo.style.display = 'inline-block';
+  } else {
+    modalDemo.style.display = 'none';
+  }
 
   const modal = new bootstrap.Modal(
     document.getElementById('productModal')
   );
   modal.show();
 }
+
 
 const productModalEl = document.getElementById('productModal');
 

@@ -4,6 +4,8 @@
 
 #portfolio {
   background: #ffffff;
+  margin-top: 100px;
+  min-height: calc(100vh - 103px);
 }
 
 /* Header */
