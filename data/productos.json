@@ -6,7 +6,8 @@
     "categoria": "movil",
     "imagen": "assets/img/productos/imagen3.png",
     "video": "https://player.vimeo.com/video/676247342",
-    "github": "https://github.com/oca/asistencia-qr"
+    "github": "https://github.com/oca/asistencia-qr",
+    "demo": "https://demo.ocaweb.com/tienda"
     },
     {
     "id": 2,
@@ -15,7 +16,8 @@
     "categoria": "web",
     "imagen": "assets/img/productos/imagen1.png",
     "video": "https://player.vimeo.com/video/676247342",
-    "github": "https://github.com/oca/web-corporativa"
+    "github": "https://github.com/oca/web-corporativa",
+    "demo": "https://demo.ocaweb.com/tienda"
     },
     {
     "id": 3,
@@ -24,7 +26,8 @@
     "categoria": "movil",
     "imagen": "assets/img/productos/imagen3.png",
     "video": "https://player.vimeo.com/video/676247342",
-    "github": ""
+    "github": "",
+    "demo": "https://demo.ocaweb.com/tienda"
     },
     {
     "id": 4,
@@ -33,7 +36,8 @@
     "categoria": "web",
     "imagen": "assets/img/productos/imagen1.png",
     "video": "https://player.vimeo.com/video/676247342",
-    "github": "https://github.com/oca/tienda-virtual"
+    "github": "https://github.com/oca/tienda-virtual",
+    "demo": "https://demo.ocaweb.com/tienda"
     },
     {
     "id": 5,
@@ -42,7 +46,8 @@
     "categoria": "sistemas",
     "imagen": "assets/img/productos/imagen2.png",
     "video": "https://player.vimeo.com/video/676247342",
-    "github": ""
+    "github": "",
+    "demo": "https://demo.ocaweb.com/tienda"
     },
     {
     "id": 6,
@@ -51,7 +56,8 @@
     "categoria": "movil",
     "imagen": "assets/img/productos/imagen3.png",
     "video": "https://player.vimeo.com/video/676247342",
-    "github": ""
+    "github": "",
+    "demo": "https://demo.ocaweb.com/tienda"
     },
     {
     "id": 7,
@@ -60,6 +66,7 @@
     "categoria": "movil",
     "imagen": "assets/img/productos/imagen3.png",
     "video": "https://player.vimeo.com/video/676247342",
-    "github": ""
+    "github": "",
+    "demo": "https://demo.ocaweb.com/tienda"
     }
 ]

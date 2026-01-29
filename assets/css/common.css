@@ -4,9 +4,16 @@
     --light-gray: #f8f9fa;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+
 
 /* NAVBAR */
 .navbar {
@@ -53,47 +60,6 @@ body {
     z-index: 1100; /* más alto que overlay, paneles y modales */
 }
 
-/* LOGIN DROPDOWN */
-.login-dropdown {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    padding: 25px;
-    min-width: 300px;
-    display: none;
-    z-index: 1000;
-    margin-top: 10px;
-}
-
-.login-dropdown.active {
-    display: block;
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.login-dropdown input {
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 15px;
-}
-
-.login-dropdown .btn {
-    border-radius: 8px;
-    padding: 12px;
-}
 
 /* OVERLAY */
 .overlay {
@@ -111,35 +77,6 @@ body {
     display: block;
 }
 
-/* SIDE PANEL REGISTRO */
-.side-panel {
-    position: fixed;
-    right: -500px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 450px;
-    max-height: 85vh;
-    background: white;
-    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
-    z-index: 1050;
-    transition: right 0.4s ease;
-    overflow-y: auto;
-    border-radius: 15px 0 0 15px;
-}
-
-.side-panel.active {
-    right: 0;
-}
-
-.side-panel-header {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, #357ABD 100%);
-    color: white;
-    padding: 20px 25px;
-    border-radius: 15px 0 0 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
 
 .side-panel-header h3 {
     margin: 0;
@@ -325,12 +262,12 @@ body {
 .contact-modal-content {
     background: white;
     border-radius: 20px;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    animation: modalSlideIn 0.3s ease;
+
+    margin: 0 auto; /* centra horizontal */
 }
+
 
 @keyframes modalSlideIn {
     from {
@@ -344,6 +281,9 @@ body {
 }
 
 .contact-modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     background: linear-gradient(135deg, var(--primary-blue) 0%, #357ABD 100%);
     color: white;
     padding: 25px;
@@ -351,6 +291,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .contact-modal-header h4 {
@@ -359,6 +300,7 @@ body {
 
 .contact-modal-body {
     padding: 30px;
+    
 }
 
 /* FOOTER */
@@ -411,3 +353,21 @@ footer {
         right: 0;
     }
 }
+
+@media (max-height: 850px) {
+    .contact-modal-content {
+        max-height: 75vh;
+        transform: scale(0.9);
+    }
+    #comentario {
+        height: 20px;
+    }
+}
+
+
+
+
+
+
+
+
