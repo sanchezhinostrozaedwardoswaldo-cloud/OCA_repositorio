@@ -58,3 +58,39 @@
     color: var(--primary-blue);
     margin-bottom: 20px;
 }
+
+/*CSS para el header de servicios*/
+/* Para que el desplegable se abra al pasar el mouse (opcional) */
+@media (min-width: 992px) {
+    .nav-item.dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+}
+
+/* Personalización de los items del menú */
+.dropdown-menu {
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #0d6efd; /* Cambia esto por el color azul de tu marca */
+    padding-left: 25px;
+}
+
+/* Gira la flecha cuando el menú se expande */
+[aria-expanded="true"] .fa-chevron-down {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+}
+
+[aria-expanded="false"] .fa-chevron-down {
+    transition: transform 0.3s ease;
+}

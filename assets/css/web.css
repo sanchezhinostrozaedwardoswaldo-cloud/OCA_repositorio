@@ -1,0 +1,138 @@
+/* Hero Section con el fondo oscuro */
+.web-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('../img/bg-hero-dark.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0;
+    margin-bottom: -50px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: rgba(255,255,255,0.5);
+    content: "/";
+}
+
+/* Caja de información que resalta */
+.info-section .row {
+    background-color: #ffffff;
+    border-radius: 20px !important;
+    position: relative;
+    z-index: 10;
+    border: 1px solid #f0f0f0;
+}
+
+.info-section h2 {
+    color: #2d3240;
+    font-size: 1.8rem;
+    position: relative;
+}
+
+.leading-relaxed {
+    line-height: 1.8;
+    font-size: 1.05rem;
+    text-align: justify;
+}
+
+.info-section img {
+    max-width: 90%;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05));
+}
+
+/* --- SECCIÓN DE PRECIOS INTEGRADA --- */
+
+.pricing-section {
+    background-color: #1a1a1a;
+    padding-top: 80px; 
+}
+
+.header-line {
+    width: 60px;
+    height: 3px;
+    background-color: #fff;
+    margin-top: 10px;
+}
+
+/* Tarjetas con Flexbox para alinear botones */
+.plan-card {
+    border-radius: 30px;
+    padding: 40px 30px;
+    text-align: center;
+    border: none;
+    height: 100%;
+    transition: transform 0.3s ease;
+    
+    /* Configuración Flexbox */
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Colores de Fondo */
+.plan-basico { background-color: #baf5c9; }
+.plan-profesional { background-color: #bed8f5; }
+.plan-ecommerce { background-color: #fffaf2; }
+
+/* Tipografía de Precios */
+.plan-card .price {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 10px;
+    color: #333;
+}
+
+.regular-price {
+    font-size: 0.8rem;
+    color: #888;
+    margin-bottom: 25px;
+}
+
+/* Listado de características: Crece para empujar el botón */
+.plan-features {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+    margin-bottom: 30px;
+    
+    /* Esto hace que la lista ocupe el espacio disponible */
+    flex-grow: 1; 
+}
+
+.plan-features li {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.plan-features li i {
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+
+/* Botones alineados */
+.btn-plan {
+    width: 100%;
+    border-radius: 50px;
+    padding: 12px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border: none;
+    
+    /* Asegura que se mantenga al final */
+    margin-top: auto; 
+}
+
+.badge-popular {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #28a745;
+    color: white;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
