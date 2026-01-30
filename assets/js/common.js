@@ -31,6 +31,7 @@ if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', () => {
         mobileMenuPanel.classList.add('active');
         overlay.classList.add('active');
+        renderMobileAvatar();
     });
 }
 
@@ -141,3 +142,68 @@ if (ctaContactBtn) {
         contactModal.classList.add('active');
     });
 }
+
+
+
+/* ===============================
+    MANEJO DE SESIÓN / AVATAR
+================================ */
+function initUserSession() {
+    const user = JSON.parse(localStorage.getItem("session"));
+    if (!user) return;
+
+    const desktopBtn = document.getElementById("loginBtn");
+    const mobileBtn = document.getElementById("mobileLoginBtn");
+
+    [desktopBtn, mobileBtn].forEach(btn => {
+        if (!btn) return;
+
+        // evitar duplicados
+        if (btn.parentElement.querySelector(".user-avatar")) return;
+
+        btn.style.display = "none";
+
+        const avatar = document.createElement("div");
+        avatar.className = "user-avatar";
+        avatar.textContent = user.nombre
+            ? user.nombre.charAt(0).toUpperCase()
+            : "U";
+
+        const menu = document.createElement("div");
+        menu.className = "user-menu";
+        menu.innerHTML = `
+            <a href="#">Perfil</a>
+            <a href="#" class="logout">Cerrar sesión</a>
+        `;
+
+        const wrapper = document.createElement("div");
+        wrapper.style.position = "relative";
+        wrapper.appendChild(avatar);
+        wrapper.appendChild(menu);
+
+        btn.parentElement.appendChild(wrapper);
+
+        avatar.addEventListener("click", (e) => {
+            e.stopPropagation();
+            menu.classList.toggle("show");
+        });
+
+        menu.querySelector(".logout").addEventListener("click", (e) => {
+            e.preventDefault();
+            localStorage.removeItem("session");
+            location.reload();
+        });
+
+        document.addEventListener("click", () => {
+            menu.classList.remove("show");
+        });
+    });
+}
+
+
+
+
+
+
+
+

@@ -166,23 +166,17 @@
 <script>
     // Cargar header
     fetch('header.html')
-        .then(res => res.text())
-        .then(data => {
-            document.getElementById('header-components').innerHTML = data;
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById('header-components').innerHTML = data;
 
-            // Lista de scripts a cargar después del header
-            const scriptsToLoad = [
-                'assets/js/common.js',
-                'assets/js/index.js'
-            ];
-
-            scriptsToLoad.forEach(src => {
-                const script = document.createElement('script');
-                script.src = src;
-                script.defer = true; // opcional pero recomendado
-                document.body.appendChild(script);
-            });
-        });
+        const script = document.createElement('script');
+        script.src = 'assets/js/common.js';
+        script.onload = () => {
+            initUserSession(); // 🔥 AQUÍ
+        };
+        document.body.appendChild(script);
+    });
 
     // Cargar footer
     fetch('footer.html')

@@ -364,10 +364,45 @@ footer {
     }
 }
 
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4A90E2, #357ABD);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(74,144,226,0.4);
+}
 
+.user-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: #1a1a1a;
+    border-radius: 10px;
+    padding: 10px 0;
+    min-width: 160px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    display: none;
+    z-index: 1200;
+}
 
+.user-menu a {
+    display: block;
+    padding: 10px 16px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
 
+.user-menu a:hover {
+    background: rgba(255,255,255,0.1);
+}
 
-
-
-
+.user-menu.show {
+    display: block;
+}
